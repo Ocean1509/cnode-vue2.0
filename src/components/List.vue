@@ -1,8 +1,7 @@
 <template>
 	<div class="main">
 		<ul>
-             <!-- v-link="{name:'topic',params:{id:item.id}}"  -->
-			<li v-for="item in list">
+             <li v-for="item in list"  @click="toDetail(item.id)">
 					<!-- <img v-lazy="item.author.avatar_url" alt="avator" v-link="{name:'user',params:{loginname:item.author.loginname}}"> -->
 					<div class='tab'>
 						<span v-if="item.top" class='key'>置顶</span>
@@ -20,6 +19,11 @@
 <script>
 	export default {
 		props:['list'],
+		methods: {
+			toDetail(id) {
+				this.$router.push({name: 'topic', params: { id: id }})
+			}
+		}
 	}
 </script>
 <style scoped>

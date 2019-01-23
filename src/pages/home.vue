@@ -10,24 +10,16 @@
     </nav>
     <div v-if="!getTopics.failure">
       <List :list="getTopics.all"></List>
-      <!-- <mload :load="getTopics.loading"></mload>-->
     </div>
     <div v-else class="fail">获取文章失败</div>
-    <div class="publish" v-if="show" transition="enter">
-      <img src="../assets/images/bigpublish.png" alt @click="publish">
-    </div>
   </section>
-  <!-- <mdialog :configs="configs"></mdialog> -->
 </template>
 <script>
 import List from "@/components/List";
 import { mapState, mapActions } from "vuex";
-// import { getTopic, initTopic } from "../vuex/action";
 export default {
   components: {
     List: List
-    // mload: require("../components/loading.vue"),
-    // mdialog: require("../components/dialog.vue")
   },
   data() {
     return {
@@ -49,46 +41,12 @@ export default {
   },
   computed: {
     getTopics() {
-      return this.$store.state.showTopic.data;
+      return this.$store.state.topicList;
     },
     tabs() {
-        return this.$store.state.topicNav.tabs
+        return this.$store.state.tabs
     }
   },
-  //   vuex: {
-  //     actions: {
-  //       getTopic,
-  //       initTopic
-  //     },
-  //     getters: {
-  //       //拿到首页内容数据
-  //       getTopics: ({ showTopic }) => showTopic.data,
-  //       //获取首页导航
-  //       tabs: ({ topicNav }) => topicNav.tabs,
-  //       //获取个人登录信息
-  //       getUser: ({ userMes }) => userMes.user
-  //     }
-  //   },
-  //   route: {
-  //     data(transition) {
-  //       if (transition.to.path == "/") {
-  //         this.type = "all";
-  //         this.page = 1;
-  //       } else {
-  //         this.type = transition.to.query.type;
-  //         this.page = transition.to.query.page;
-  //       }
-  //       this.initTopic();
-  //       this.getTopic(this.type, this.page);
-  //       window.addEventListener("scroll", this.scroll);
-  //       transition.next();
-  //     },
-  //     deactivate(transition) {
-  //       window.removeEventListener("scroll", this.scroll);
-  //       transition.next();
-  //     },
-  //     canReuse: false
-  //   },
   mounted() {
     if (this.$route.path == "/") {
       this.type = "all";
@@ -126,17 +84,9 @@ export default {
         0
       ) {
         this.page++;
-        console.log(this.type);
         this.getTopic(this.type, this.page);
       }
     },
-    publish() {
-      if (!this.getUser.success) {
-        this.configs.visiable = true;
-      } else {
-        this.$router.go({ name: "issue" });
-      }
-    }
   }
 };
 </script>
